@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using UnityEngine.Diagnostics;
+using UnityEngine.UIElements;
 
 namespace HeavenDustOne;
 
@@ -11,8 +12,19 @@ public static class Patches
     [HarmonyPatch(typeof(Utils), nameof(Utils.OnChangeFullScreen))]
     public static bool Utils_OnChangeFullScreen()
     {
-        Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+        Screen.SetResolution(Plugin.Width.Value, Plugin.Height.Value, true);
         return false;
 
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(CameraCtl), "Awake")]
+    //[HarmonyPatch(typeof(CameraCtl), "Update")]
+    public static void CameraCtl_Awake(ref CameraCtl __instance)
+    {
+        if (Plugin.HideOverlay.Value)
+        {
+            __instance.m_canvas.GetComponentInChildren<CanvasRenderer>().SetAlpha(0f);
+        }
     }
 }
