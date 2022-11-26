@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
-using UnityEngine.Diagnostics;
-using UnityEngine.UIElements;
 using UnityStandardAssets.ImageEffects;
 
 namespace HeavenDustOne;
@@ -22,10 +19,6 @@ public static class Patches
     [HarmonyPatch(typeof(CameraCtl), "Awake")]
     public static void CameraCtl_Awake(ref CameraCtl __instance)
     {
-        
-        var cam = __instance.GetComponent<Camera>();
-        cam.allowMSAA = true;
-        
         var effects = __instance.GetComponentInChildren<VignetteAndChromaticAberration>();
         if (Plugin.DisableVignette.Value)
         {
