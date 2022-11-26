@@ -1,6 +1,7 @@
 ﻿using System;
 using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
 
@@ -17,13 +18,22 @@ namespace HeavenDustOne
         internal static ConfigEntry<bool> HideOverlay = null!;
         internal static ConfigEntry<int> Width = null!;
         internal static ConfigEntry<int> Height = null!;
+        
+        internal static ConfigEntry<bool> DisableVignette = null!;
+        internal static ConfigEntry<bool> DisableChromaticAberration = null!;
+
+        internal static ManualLogSource LOG;
 
         private void Awake()
         {
             HideOverlay = Config.Bind("General", "Hide Overlay", true, "Hide the camera overlay.");
             Width = Config.Bind("Resolution", "Width", Display.main.systemWidth);
             Height = Config.Bind("Resolution", "Height", Display.main.systemHeight);
-            Logger.LogInfo($"Plugin {PluginName} is loaded!");
+            
+            DisableVignette = Config.Bind("Effects", "Disable Vignette", true, "Disable the vignette effect.");
+            DisableChromaticAberration = Config.Bind("Effects", "Disable Chromatic Aberration", true, "Disable the chromatic aberration effect.");
+            LOG = Logger;
+            LOG.LogInfo($"Plugin {PluginName} is loaded!");
         }
 
         private void OnEnable()
