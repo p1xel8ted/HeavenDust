@@ -23,8 +23,6 @@ namespace HeavenDustTwo
         internal static ConfigEntry<bool> DisableChromaticAberration = null!;
         internal static ConfigEntry<bool> DisableFogOfWar = null!;
 
-        internal static ManualLogSource LOG;
-
         private void Awake()
         {
             HideOverlay = Config.Bind("General", "Hide Overlay", true, "Hide the camera overlay.");
@@ -34,8 +32,8 @@ namespace HeavenDustTwo
             DisableVignette = Config.Bind("Effects", "Disable Vignette", true, "Disable the vignette effect.");
             DisableChromaticAberration = Config.Bind("Effects", "Disable Chromatic Aberration", true, "Disable the chromatic aberration effect.");
             DisableFogOfWar = Config.Bind("Effects", "Disable Fog of War", true, "Disable the fog of war effect.");
-            LOG = Logger;
-            LOG.LogInfo($"Plugin {PluginName} is loaded!");
+          
+            Logger.LogInfo($"Plugin {PluginName} is loaded!");
         }
 
         private void OnEnable()
@@ -46,6 +44,23 @@ namespace HeavenDustTwo
         private void OnDisable()
         {
             Harmony.UnpatchSelf();
+        }
+
+        internal static void SetResolution(CameraCtl camera = null)
+        {
+            Screen.SetResolution(Width.Value, Height.Value,true);
+            var rect = new Rect(0, 0, Width.Value, Height.Value);
+            foreach(var cam in Camera.allCameras)
+            {
+                cam.set_pixelRect_Injected(ref rect);
+                cam.set_rect_Injected(ref rect);
+            }
+
+            if (camera == null) return;
+            
+            camera.m_cameraUI.set_pixelRect_Injected(ref rect);
+            camera.m_cameraUI.set_rect_Injected(ref rect);
+
         }
     }
 }

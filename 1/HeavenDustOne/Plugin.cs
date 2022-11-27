@@ -22,8 +22,6 @@ namespace HeavenDustOne
         internal static ConfigEntry<bool> DisableVignette = null!;
         internal static ConfigEntry<bool> DisableChromaticAberration = null!;
 
-        internal static ManualLogSource LOG;
-
         private void Awake()
         {
             HideOverlay = Config.Bind("General", "Hide Overlay", true, "Hide the camera overlay.");
@@ -32,8 +30,8 @@ namespace HeavenDustOne
             
             DisableVignette = Config.Bind("Effects", "Disable Vignette", true, "Disable the vignette effect.");
             DisableChromaticAberration = Config.Bind("Effects", "Disable Chromatic Aberration", true, "Disable the chromatic aberration effect.");
-            LOG = Logger;
-            LOG.LogInfo($"Plugin {PluginName} is loaded!");
+            
+            Logger.LogInfo($"Plugin {PluginName} is loaded!");
         }
 
         private void OnEnable()

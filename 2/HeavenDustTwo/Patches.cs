@@ -1,7 +1,6 @@
 ﻿using FoW;
 using HarmonyLib;
 using UnityEngine;
-using UnityStandardAssets.ImageEffects;
 
 namespace HeavenDustTwo;
 
@@ -12,33 +11,40 @@ public static class Patches
     [HarmonyPatch(typeof(MainUI), nameof(MainUI.ShowStudioName))]
     public static bool MainUI_ShowStudioName()
     {
+        Plugin.SetResolution();
         return false;
     }
-
-    [HarmonyPrefix]
-    [HarmonyPatch(typeof(OptionMgr), "SetResolution")]
-    public static bool OptionMgr_SetResolution()
-    {
-        Screen.SetResolution(Plugin.Width.Value, Plugin.Height.Value, true);
-        return false;
-    }
-
-
+    
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CameraCtl), "Update")]
     public static void CameraCtl_Update(ref CameraCtl __instance)
     {
         var cam = GameObject.Find("Canvas/BottomLayer/MainUI/ImgMask").GetComponent<CanvasRenderer>();
+
+        if (Screen.currentResolution.height != Plugin.Height.Value || Screen.currentResolution.width != Plugin.Width.Value)
+        {
+            Plugin.SetResolution(__instance);
+        }
+
         if (Plugin.HideOverlay.Value && cam.GetAlpha() > 0f)
         {
             cam.SetAlpha(0f);
         }
     }
 
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(SplashScreen), nameof(SplashScreen.DoStart))]
+    public static void SplashScreen_DoStart(ref bool ___m_bDone)
+    {
+        ___m_bDone = true;
+    }
+
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CameraCtl), "Start")]
     public static void CameraCtl_Start(ref CameraCtl __instance)
     {
+        Plugin.SetResolution(__instance);
+
         var fow = __instance.GetComponentInChildren<FogOfWarLegacy>();
 
         if (Plugin.DisableFogOfWar.Value)
@@ -57,10 +63,9 @@ public static class Patches
             effects.ChromaticAberration = false;
         }
 
-        if (Plugin.HideOverlay.Value)
-        {
-            var cam = GameObject.Find("Canvas/BottomLayer/MainUI/ImgMask").GetComponent<CanvasRenderer>();
-            cam.SetAlpha(0f);
-        }
+        if (!Plugin.HideOverlay.Value) return;
+        
+        var cam = GameObject.Find("Canvas/BottomLayer/MainUI/ImgMask").GetComponent<CanvasRenderer>();
+        cam.SetAlpha(0f);
     }
 }
