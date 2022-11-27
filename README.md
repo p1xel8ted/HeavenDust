@@ -22,7 +22,7 @@
 ## Installation
 - Grab the latest release of the respective games release from [here.](https://github.com/p1xel8ted/HeavenDust/releases)
 - Extract the contents of the release zip in to the game directory.<br />(e.g. "**H:\Games\steamapps\common\Heaven Dust**" for Steam).
-- Run the game once to generate a config file located at **<GameDirectory>\BepInEx\config\SignalisFix.cfg**
+- Run the game once to generate a config file located at **<GameDirectory>\BepInEx\config\p1xel8ted.heavendust.one.cfg**
 - If installed correctly, you will see a console window pop-up.
 
 ## Configuration
