@@ -1,6 +1,6 @@
 # Heaven Dust 1 & 2 Ultra-Wide Fixes + Extras
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F2F2DI3WA)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F2F2DI3WA)</br>
 [![Github All Releases](https://img.shields.io/github/downloads/p1xel8ted/HeavenDust/total)](https://github.com/p1xel8ted/HeavenDust/releases)
 
 ## Heaven Dust 1
