@@ -1,7 +1,7 @@
 # Heaven Dust 1 & 2 Ultra-Wide Fixes + Extras
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F2F2DI3WA)</br>
-[![Github All Releases](https://img.shields.io/github/downloads/p1xel8ted/HeavenDust/total)](https://github.com/p1xel8ted/HeavenDust/releases)
+[![Github All Releases](https://img.shields.io/github/downloads/p1xel8ted/HeavenDust/total?style=plastic)](https://github.com/p1xel8ted/HeavenDust/releases)
 
 ## Heaven Dust 1
 
@@ -13,10 +13,10 @@
 ## Heaven Dust 2
 
 * Forces resolution set in the config file. Default is your main screen resolution.
-* Toggle "dirty tv" camera overlay effect.
+* Toggle the "dirty tv" camera overlay effect.
 * Toggle vignette.
 * Toggle chromatic aberration.
-* Toggle fog of war.
+* Toggle the fog of war.
 * Skip intros.
 
 ## Installation
