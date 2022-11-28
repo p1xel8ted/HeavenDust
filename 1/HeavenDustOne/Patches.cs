@@ -19,6 +19,8 @@ public static class Patches
     [HarmonyPatch(typeof(CameraCtl), "Awake")]
     public static void CameraCtl_Awake(ref CameraCtl __instance)
     {
+        if (__instance == null) return;
+        
         var effects = __instance.GetComponentInChildren<VignetteAndChromaticAberration>();
         if (Plugin.DisableVignette.Value)
         {

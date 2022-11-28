@@ -12,7 +12,7 @@ namespace HeavenDustOne
     {
         private const string PluginGuid = "p1xel8ted.heavendust.one";
         private const string PluginName = "HeavenDust 1 UltraWide Fix";
-        private const string PluginVer = "0.1.0";
+        private const string PluginVer = "0.1.1";
         private static readonly Harmony Harmony = new(PluginGuid);
         
         internal static ConfigEntry<bool> HideOverlay = null!;
