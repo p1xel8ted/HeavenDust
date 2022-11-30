@@ -21,6 +21,7 @@ namespace HeavenDustTwo
         internal static ConfigEntry<bool> DisableVignette = null!;
         internal static ConfigEntry<bool> DisableChromaticAberration = null!;
         internal static ConfigEntry<bool> DisableFogOfWar = null!;
+        internal static ConfigEntry<bool> AlternateUiScaleMode = null!;
 
         internal static ManualLogSource LOG;
 
@@ -29,10 +30,13 @@ namespace HeavenDustTwo
             HideOverlay = Config.Bind("General", "Hide Overlay", true, "Hide the camera overlay.");
             Width = Config.Bind("Resolution", "Width", Display.main.systemWidth);
             Height = Config.Bind("Resolution", "Height", Display.main.systemHeight);
+            AlternateUiScaleMode = Config.Bind("Resolution", "Alternate UI Scale Mode", false, "Use the alternate UI scale mode.");
 
             DisableVignette = Config.Bind("Effects", "Disable Vignette", true, "Disable the vignette effect.");
             DisableChromaticAberration = Config.Bind("Effects", "Disable Chromatic Aberration", true, "Disable the chromatic aberration effect.");
             DisableFogOfWar = Config.Bind("Effects", "Disable Fog of War", true, "Disable the fog of war effect.");
+           
+            
             LOG = Logger;
             LOG.LogInfo($"Plugin {PluginName} is loaded!");
         }

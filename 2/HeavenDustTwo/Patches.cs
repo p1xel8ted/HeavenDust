@@ -5,6 +5,7 @@ using System.Linq;
 using FoW;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HeavenDustTwo;
 
@@ -83,67 +84,22 @@ public static class Patches
         return false;
     }
 
-
-    [HarmonyPrefix]
-    [HarmonyPatch(typeof(Inventory), nameof(Inventory.DoOpenWin))]
-    public static void Inventory_DoOpenWin()
-    {
-        var tips = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/PanelItems/Tips").GetComponent<RectTransform>();
-        if (tips != null)
-        {
-            tips.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, -20, tips.rect.width);
-            tips.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, tips.rect.height);
-        }
-
-        var a = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/TogItem").GetComponent<RectTransform>();
-        var b = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/TogFile").GetComponent<RectTransform>();
-        var c = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/TogMap").GetComponent<RectTransform>();
-        var d = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/TogSys").GetComponent<RectTransform>();
-
-        var e = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/LB").GetComponent<RectTransform>();
-        var f = GameObject.Find("Canvas/Layer3/PanelInventory(Clone)/RB").GetComponent<RectTransform>();
-
-        var buttons = new List<RectTransform> {a, b, c, d};
-        foreach (var but in buttons.Where(but => but != null))
-        {
-            var rect = but.rect;
-            but.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, rect.height * 2f, rect.height);
-        }
-        
-        if (e != null)
-        {
-            var rect1 = e.rect;
-            e.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, rect1.height, rect1.height);
-        }
-
-        if (f != null)
-        {
-            var rect2 = f.rect;
-            f.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, rect2.height, rect2.height);
-        }
-        
-        var itemsLeft = GameObject.Find("Canvas/Layer2/PanelEquipment(Clone)").GetComponent<RectTransform>();
-        if (itemsLeft != null)
-        {
-            itemsLeft.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, -20, itemsLeft.rect.width);
-            itemsLeft.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, tips.rect.height - 20f, itemsLeft.rect.height);
-        }
-
-        var itemsRight = GameObject.Find("Canvas/Layer2/PanelItems(Clone)").GetComponent<RectTransform>();
-
-        if (itemsRight != null)
-        {
-            itemsRight.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, 0, itemsLeft.rect.width);
-            itemsRight.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, itemsLeft.rect.height);
-        }
-    }
-
-
     [HarmonyPostfix]
     [HarmonyPatch(typeof(CameraCtl), nameof(CameraCtl.Start))]
     public static void CameraCtl_Start(ref CameraCtl __instance)
     {
         if (__instance == null) return;
+
+        var canvas = GameObject.Find("Canvas").GetComponent<CanvasScaler>();
+        if (canvas != null)
+        {
+            canvas.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            canvas.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            if (Plugin.AlternateUiScaleMode.Value)
+            {
+                canvas.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+            }
+        }
 
         var fow = __instance.GetComponentInChildren<FogOfWarLegacy>();
         if (Plugin.DisableFogOfWar.Value && fow != null)
